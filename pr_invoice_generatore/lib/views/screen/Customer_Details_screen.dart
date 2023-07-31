@@ -12,6 +12,7 @@ class _CustomerDetailsState extends State<CustomerDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
@@ -76,7 +77,6 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                   ),
                   SizedBox(height: 20,),
                   TextFormField(
-                    initialValue: Globals.number,
                     validator: (val){
                       if(val!.isEmpty)
                       {
@@ -103,34 +103,38 @@ class _CustomerDetailsState extends State<CustomerDetails> {
                     ),
                     onChanged: (val){
                       setState(() {
-                        Globals.number = val;
+                        Globals.number = int.parse(val);
                       });
                     },
                   ),
-                  const Text(
-                    "* Gender",
-                    style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold
+                  SizedBox(height: 20,),
+                  TextFormField(
+                    validator: (val){
+                      if(val!.isEmpty)
+                      {
+                        return "Please Enter Date";
+                      }
+                      else
+                      {
+                        return null;
+                      }
+                    },
+                    keyboardType: TextInputType.datetime,
+                    textInputAction: TextInputAction.next,
+                    decoration: InputDecoration(
+                        hintText: "DD/MM/YY",
+                        labelText: "Date",
+                        prefixIcon: Icon(
+                          Icons.calendar_month,
+                          size: 25,
+                        ),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(50)
+                        )
                     ),
-                  ),
-                  RadioListTile(
-                    title: const Text("Male"),
-                    value: "Male",
-                    groupValue: Globals.maleFemale,
                     onChanged: (val){
                       setState(() {
-                        Globals.maleFemale = val;
-                      });
-                    },
-                  ),
-                  RadioListTile(
-                    title: const Text("female"),
-                    value: "Female",
-                    groupValue: Globals.maleFemale,
-                    onChanged: (val){
-                      setState(() {
-                        Globals.maleFemale = val;
+                        Globals.date = val;
                       });
                     },
                   ),

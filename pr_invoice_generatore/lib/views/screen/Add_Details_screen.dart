@@ -10,6 +10,19 @@ class AddDetails extends StatefulWidget {
 
 class _AddDetailsState extends State<AddDetails> {
 
+  Map items = {
+    "p_number" : 0,
+    "name" : "",
+    "price" : 0,
+    "quantity" : 0,
+    "discount" : 0,
+    "gst" : 0,
+    "gst_value" : 0,
+    "sub_total" : 0,
+    "total" : 0,
+  };
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -59,18 +72,25 @@ class _AddDetailsState extends State<AddDetails> {
                       width: 350,
                       child: Column(
                         children: [
-                          TextFormField(
-                            // initialValue: Globals.,
-                            validator: (val){
-                              if(val!.isEmpty)
-                              {
-                                return "Please Product Name";
-                              }
-                              else
-                              {
-                                return null;
-                              }
+                          TextField(
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            maxLength: 5,
+                            decoration: InputDecoration(
+                                hintText: "Enter Product Number",
+                                labelText: "Product Id",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50)
+                                )
+                            ),
+                            onChanged: (val){
+                              setState(() {
+                                items["p_number"] = int.parse(val);
+                              });
                             },
+                          ),
+                          SizedBox(height: 20,),
+                          TextField(
                             keyboardType: TextInputType.name,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
@@ -82,22 +102,12 @@ class _AddDetailsState extends State<AddDetails> {
                             ),
                             onChanged: (val){
                               setState(() {
-                                // Globals.itemName = val;
+                                items["name"] = val;
                               });
                             },
                           ),
                           SizedBox(height: 20,),
-                          TextFormField(
-                            validator: (val){
-                              if(val!.isEmpty)
-                              {
-                                return "Enter Price";
-                              }
-                              else
-                              {
-                                return null;
-                              }
-                            },
+                          TextField(
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
@@ -109,22 +119,12 @@ class _AddDetailsState extends State<AddDetails> {
                             ),
                             onChanged: (val){
                               setState(() {
-                                // Globals.price = val as double?;
+                                items["price"] = int.parse(val);
                               });
                             },
                           ),
                           SizedBox(height: 20,),
-                          TextFormField(
-                            validator: (val){
-                              if(val!.isEmpty)
-                              {
-                                return "Enter Quantity";
-                              }
-                              else
-                              {
-                                return null;
-                              }
-                            },
+                          TextField(
                             keyboardType: TextInputType.number,
                             textInputAction: TextInputAction.next,
                             decoration: InputDecoration(
@@ -136,25 +136,58 @@ class _AddDetailsState extends State<AddDetails> {
                             ),
                             onChanged: (val){
                               setState(() {
-                                // Globals.quantity = val as int?;
+                                items["quantity"] = int.parse(val);
+                              });
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                          TextField(
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.next,
+                            decoration: InputDecoration(
+                                hintText: "Enter GST",
+                                labelText: "GST",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(50)
+                                )
+                            ),
+                            onChanged: (val){
+                              setState(() {
+                                items["gst"] = int.parse(val);
                               });
                             },
                           ),
 
                           SizedBox(height: 20,),
-                          ElevatedButton(
-                              onPressed: (){
-                                setState(() {
-                                  Globals.itemsController.removeAt(index);
-                                });
-                              },
-                              child: const Text("Delete")
-                          ),
+                         Row(
+                           children: [
+                             ElevatedButton(
+                                 onPressed: (){
+                                       items["sub_total"] = (items["price"] * items["quantity"]);
+                                       items["gst_value"] = (items["sub_total"] * items["gst"])/100;
+                                       items["total"] = (items["price"] * items["quantity"] + items["gst_value"]);
+
+                                       Globals.allItems.add(items);
+                                 },
+                                 child: Text("save"),
+                             ),
+                             Spacer(),
+                             ElevatedButton(
+                                 onPressed: (){
+                                   setState(() {
+                                     Globals.itemsController.removeAt(index);
+                                   });
+                                 },
+                                 child: const Text("Delete")
+                             ),
+                           ],
+                         )
                         ],
                       ),
                     ),
                   ),
               ),
+
             ],
           ),
         ),

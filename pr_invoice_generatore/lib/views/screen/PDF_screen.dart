@@ -51,6 +51,7 @@ class _PDFState extends State<PDF> {
                             height: 165,
                             width: 130,
                           decoration: pw.BoxDecoration(
+                            color: PdfColors.blue50,
                             image: pw.DecorationImage(
                                 image: image1,
                               fit: pw.BoxFit.cover
@@ -61,6 +62,9 @@ class _PDFState extends State<PDF> {
                       pw.Align(
                         alignment: pw.Alignment.topCenter,
                         child: pw.Container(
+                          decoration: pw.BoxDecoration(
+                            color: PdfColors.blue50
+                          ),
                           padding: pw.EdgeInsets.all(20),
                             height: 165,
                             width: 335,
@@ -83,7 +87,7 @@ class _PDFState extends State<PDF> {
                                 )
                               ),
                               pw.Text(
-                                "Gender : ${Globals.maleFemale}",
+                                "Date : ${Globals.date}",
                                 style: pw.TextStyle(
                                   fontSize: 16,
                                   fontWeight: pw.FontWeight.bold
@@ -94,11 +98,10 @@ class _PDFState extends State<PDF> {
                         ),
                       ),
                       pw.Align(
-                        alignment: pw.Alignment.centerRight,
+                        alignment: pw.Alignment.bottomRight,
                         child: pw.Container(
                           padding: pw.EdgeInsets.all(10),
-                            // color: PdfColors.blue,
-                            height: 500,
+                            height: 670,
                             width: 465,
                           child: pw.Column(
                             children: [
@@ -120,15 +123,103 @@ class _PDFState extends State<PDF> {
                                     ),
                                     padding: pw.EdgeInsets.all(10),
                                     decoration: pw.BoxDecoration(
-                                      border: pw.Border.all(width: 1)
+                                      border: pw.Border.all(width: 1),
+                                      color: PdfColors.blue100
+                                    )
+                                  ),
+                                ]
+                              ),
+                              ...List.generate(Globals.allItems.length, (index) => pw.Column(
+                                children: [
+                                  pw.Row(
+                                    children: [
+                                      pw.Container(
+                                        width: 100,
+                                        padding: pw.EdgeInsets.all(5),
+                                        child: pw.Center(
+                                            child: pw.Text("${Globals.allItems[index]["p_number"]}")
+                                        ),
+                                      ),
+                                      pw.SizedBox(width: 10),
+                                      pw.Container(
+                                        width: 120,
+                                        padding: pw.EdgeInsets.all(5),
+                                        child: pw.Center(
+                                          child: pw.Text("${Globals.allItems[index]["name"]}")
+                                        ),
+                                      ),
+                                      pw.SizedBox(width: 10),
+                                      pw.Container(
+                                        width: 60,
+                                        padding: pw.EdgeInsets.all(5),
+                                        child: pw.Center(
+                                            child: pw.Text("${Globals.allItems[index]["price"]}")
+                                        ),
+                                      ),
+                                      pw.SizedBox(width: 10),
+                                      pw.Container(
+                                        width: 75,
+                                        padding: pw.EdgeInsets.all(5),
+                                        child: pw.Center(
+                                            child: pw.Text("${Globals.allItems[index]["quantity"]}")
+                                        ),
+                                      ),
+                                      pw.SizedBox(width: 10),
+                                      pw.Container(
+                                        width: 50,
+                                        padding: pw.EdgeInsets.all(5),
+                                        child: pw.Center(
+                                          child: pw.Text("${Globals.allItems[index]["sub_total"]}"),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  pw.SizedBox(
+                                    height: 530,
+                                  ),
+                                  pw.Align(
+                                    alignment: pw.Alignment.bottomRight,
+
+                                    child: pw.Column(
+                                      children: [
+                                        pw.Container(
+                                          width: 550,
+                                          decoration: pw.BoxDecoration(
+                                            border: pw.Border.all(width: 1),
+                                            color: PdfColors.blue100
+                                          ),
+                                          child: pw.Column(
+                                            mainAxisSize: pw.MainAxisSize.min,
+                                            children: [
+                                              pw.Container(
+                                                width: 300,
+                                                padding: pw.EdgeInsets.all(5),
+                                                child: pw.Center(
+                                                  child: pw.Text(
+                                                      "GST  ${Globals.allItems[index]["gst"]}%  : ${Globals.allItems[index]["gst_value"]}",
+                                                  ),
+                                                ),
+                                              ),
+                                              pw.SizedBox(height: 10),
+                                              pw.Container(
+                                                width: 300,
+                                                padding: pw.EdgeInsets.all(5),
+                                                child: pw.Center(
+                                                  child: pw.Text("Total : ${Globals.allItems[index]["total"]}"),
+                                                ),
+                                              ),
+                                            ]
+                                          )
+                                        )
+                                      ]
                                     )
                                   )
                                 ]
-                              )
-                            ]
+                              )),
+                            ],
                           )
                         ),
-                      )
+                      ),
                     ]
                 )
             )
